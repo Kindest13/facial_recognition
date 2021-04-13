@@ -1,0 +1,17 @@
+{
+  "name": "face-recognitor",
+  "version": "1.0.0",
+  "description": "Facial Recognition Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^1.8.4"
+  },
+  "dependencies": {
+    "python-shell": "^1.0.7",
+    "sweetalert2": "^10.15.7"
+  }
+}
