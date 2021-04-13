@@ -60,7 +60,7 @@ function startJob() {
     };
     Swal.fire({
         title: 'The screenshot will be taken in&nbsp;<strong></strong>&nbsp;seconds.',
-        html: 'Please open your videochat tab.',
+        text: 'Please open your videochat tab.',
         showDenyButton: true,
         width: '50rem',
         confirmButtonText: 'Ok',
@@ -91,7 +91,7 @@ function startJob() {
             Swal.fire({
                 icon: 'success',
                 title: 'The screenshot has been taken successfully!',
-                html: 'The every 10s job has been started successfully!',
+                text: 'The every 10s job has been started successfully!',
                 width: '50rem',
                 confirmButtonText: 'Ok',
                 timer: 3000
