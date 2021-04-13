@@ -36,9 +36,9 @@ while True:
                 dpname = faces[face]["name"]
                 break
         display(loc, dpname)
-    cv2.imshow(os.getcwd(), frame)
+    cv2.imshow("Press 'esc' or 'q' to close", frame)
     k = cv2.waitKey(10)
-    if k == ord('q'):
+    if k == ord('q') or k == 27:
         break
 cam.release()
 cv2.destroyAllWindows()

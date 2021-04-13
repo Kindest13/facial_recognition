@@ -16,15 +16,19 @@
     </div>
     <br />
 
-    <button id="detect" class="btn btn-success" onclick="detect_faces()">
+    <button id="detect" class="btn btn-success" onclick="detectFaces()">
       Detect faces
     </button>
     <br />
     <br />
-    <label>Who's face do you want to add?</label>
+    <label>
+        Provide name for new face.
+        <br>
+        <span style="color: #b5b5b5">(Press 'a' to add new face in the opened window.)</span>
+    </label>
     <br />
-    <input type="text" value="type name..." id="person" />
-    <button id="add" class="btn btn-warning" onclick="add_face()">
+    <input type="text" placeholder="provide name" id="person" />
+    <button id="add" class="btn btn-warning" onclick="addFace()">
       Add a new face
     </button>
   </div>

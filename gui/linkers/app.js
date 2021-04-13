@@ -1,7 +1,9 @@
 const Swal = require('sweetalert2')
 
-function detect_faces() {
-  document.getElementById("detect").value = "Hang on...";
+function detectFaces() {
+  const btn = document.getElementById("detect");
+  btn.innerText = "Loading...";
+  btn.disabled = true;
   var {PythonShell} = require("python-shell");
   var path = require("path");
 
@@ -12,31 +14,43 @@ function detect_faces() {
   var face = new PythonShell("detect_faces.py", options);
 
   face.end(function (err, code, message) {
-    document.getElementById("detect").value = "Detect faces";
+    btn.innerText = "Detect faces";
+    btn.disabled = false;
   });
 }
 
-function add_face() {
-  var {PythonShell} = require("python-shell");
-  var path = require("path");
-  var name = document.getElementById("person").value;
-  console.log(name)
+function addFace() {
+  const btn = document.getElementById("add");
+  const {PythonShell} = require("python-shell");
+  const path = require("path");
+  const input = document.getElementById("person");
+  const name = input.value;
+  
+  btn.innerText = "Loading...";
+  btn.disabled = true;
 
   var options = {
     scriptPath: path.join(__dirname, "/../engine/face_recognition/"),
     args: ["cam", name],
   };
-
+  if(!name) {
+    swal("Please provide your Name", '', "error");
+    btn.innerText = "Add a new face";
+    btn.disabled = false;
+    return;
+  }
   var face = new PythonShell("add_face.py", options);
 
   face.end(function (err, code, message) {
     console.log(err, code, message);
-    swal("Face added!", "We can now recognize your face", "success");
-    // document.getElementsById("add").innerHTML = "Add a new face";
+    btn.innerText = "Add a new face";
+    btn.disabled = false;
+    input.value = '';
+    swal("Face added!", `We can now recognize your face ${name}`, "success");
   });
 }
 
-function start_job() {
+function startJob() {
     var {PythonShell} = require("python-shell");
     var path = require("path");
     let timerInterval;
@@ -64,15 +78,18 @@ function start_job() {
         }
       }, 'success').then((result) => {
         if (result.isDenied) {
-          Swal.fire('Supervising job was successfully stopped', '', 'info')
+          Swal.fire({
+            icon: 'info',
+            title: 'Supervising was successfully stopped!'
+          })
           return;
         }
 
-        const team_shot = new PythonShell("take_first_snap.py", options);
+        const teamShot = new PythonShell("take_first_snap.py", options);
     
-        team_shot.end(function (err, code, message) {
-            console.log(err, code, message);
+        teamShot.end(function (err, code, message) {
             Swal.fire({
+                icon: 'success',
                 title: 'The screenshot has been taken successfully!',
                 html: 'The every 10s job has been started successfully!',
                 width: '50rem',
@@ -80,13 +97,13 @@ function start_job() {
                 timer: 3000
             })
 
-            const next_shots = new PythonShell("take_next_snaps.py", options);
+            const nextShots = new PythonShell("take_next_snaps.py", options);
             
-            next_shots.end(function (err, code, message) {
+            nextShots.end(function (err, code, message) {
                 console.log(err, code, message);
                 Swal.fire({
                     title: 'The job was stopped!',
-                    type: 'error',
+                    icon: 'error',
                     width: '50rem',
                     confirmButtonText: 'Ok'
                 })

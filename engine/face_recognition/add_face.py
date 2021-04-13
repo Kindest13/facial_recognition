@@ -5,28 +5,25 @@ from pathlib import Path
 import _pickle as c
 
 root = Path(".")
-my_path = root / "faces"
+myPath = root / "faces"
 
 s, img, name = sys.argv
 if img != "cam":
-    img_array = f.load_image_file(img)
-    face_enc = f.face_encodings(img_array)[0]
-    with open(my_path / name, 'wb') as fp:
-        c.dump(face_enc, fp)
-    print ("Done")
+    imgArray = f.load_image_file(img)
+    faceEnc = f.face_encodings(imgArray)[0]
+    with open(myPath / name, 'wb') as fp:
+        c.dump(faceEnc, fp)
 
 if img == "cam":
     cam = cv2.VideoCapture(0)
     while True:
-        _, img_array = cam.read()
-        cv2.imshow("Press 'a' to add your face", img_array)
+        _, imgArray = cam.read()
+        cv2.imshow("Press 'a' to add your face", imgArray)
         k = cv2.waitKey(10)
         if k == ord('a'):
-            face_enc = f.face_encodings(img_array)[0]
-            print(face_enc)
-            with open(my_path / name, 'wb') as fp:
-                c.dump(face_enc, fp)
+            faceEnc = f.face_encodings(imgArray)[0]
+            with open(myPath / name, 'wb') as fp:
+                c.dump(faceEnc, fp)
             break
-    print ("Done")
     cam.release()
     cv2.destroyAllWindows()

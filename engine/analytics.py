@@ -1,54 +1,57 @@
 import face_recognition
-from pathlib import Path
 import shutil, os
 import cv2
 from PIL import Image, ImageDraw
 
 from mark_unknown import markUnknownFaces
 from mark_presence import markPresenceAnalysis
+from send_analytics import sendAnalytics
 from utils.create_folder import createFolder
 
 
 
 
 def moveSnapshots():
-    root = Path(".")
-    origin_dir = root / "analytics"
-    snapshots_dir = root / "snapshots"
-    dest_dir = createFolder(origin_dir, '1', False)
+    originDir = './analytics'
+    snapshotsDir = './snapshots'
+    destDir = createFolder(originDir, '1', False)
 
-    files = [f.name for f in os.scandir(snapshots_dir) if f.is_file()]
+    files = [f.name for f in os.scandir(snapshotsDir) if f.is_file()]
 
     for file in files:
-        file_path = os.path.join(snapshots_dir, file)
-        shutil.move(file_path, dest_dir)
+        filePath = os.path.join(snapshotsDir, file)
+        shutil.move(filePath, destDir)
 
-    return dest_dir
+    return destDir
 
 
 
     
 def analytics():
-    origin_dir = moveSnapshots()
+    originDir = moveSnapshots()
+    emailDir = createFolder('.', 'email', True)
 
-    image_of_team = face_recognition.load_image_file('./team/team.jpg')
+    imageOfTeam = face_recognition.load_image_file('./team/team.jpg')
 
-    team_face_locations = face_recognition.face_locations(image_of_team)
-    team_face_encodings = face_recognition.face_encodings(image_of_team)
-    face_analytics = [0] * len(team_face_encodings)
+    # team_face_locations = face_recognition.face_locations(imageOfTeam)
+    teamFaceEncodings = face_recognition.face_encodings(imageOfTeam)
+    faceAnalytics = [0] * len(teamFaceEncodings)
 
-    files = [f.name for f in os.scandir(origin_dir) if f.is_file()]
+    files = [f.name for f in os.scandir(originDir) if f.is_file()]
 
     for file in files:
         # Read the image
-        file_path = os.path.join(origin_dir, file)
-        unknown_image = face_recognition.load_image_file(file_path)
+        filePath = os.path.join(originDir, file)
+        unknownImage = face_recognition.load_image_file(filePath)
 
-        markedImage = markUnknownFaces(unknown_image, face_analytics)
+        markedImage = markUnknownFaces(unknownImage, faceAnalytics)
         if markedImage:
-            path_to_save = os.path.join('./email', file)
-            markedImage.save(path_to_save)
+            pathToSave = os.path.join(emailDir, file)
+            markedImage.save(pathToSave)
         
 
-    markPresenceAnalysis(face_analytics, len(files))
+    markedAnalysisImage = markPresenceAnalysis(faceAnalytics, len(files))
+    markedAnalysisImage.save(os.path.join(emailDir, 'analytics.jpg'))
+    sendAnalytics()
+
         

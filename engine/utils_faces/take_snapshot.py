@@ -17,8 +17,8 @@ def takeSnapshot():
     tm = time.time()
     name = getDateTime(tm)
 
-    im = ImageGrab.grab()
-    # im.show()
-    my_path_to_file = root / "snapshots" / f'{name}.jpg'
+    snapshot = ImageGrab.grab()
+    # snapshot.show()
+    myPathToFile = root / "snapshots" / f'{name}.jpg'
 
-    im.save(my_path_to_file)
+    snapshot.save(myPathToFile)

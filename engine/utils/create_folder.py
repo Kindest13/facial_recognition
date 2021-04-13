@@ -2,17 +2,16 @@ import os
 import shutil
 
 def createFolder(origin_dir, dir_to_create, rewrite):
-    dest_dir = os.path.join(origin_dir, dir_to_create)
-    analytic_dirs = [d.name for d in os.scandir(origin_dir) if d.is_dir()]
-    print(analytic_dirs)
+    destDir = os.path.join(origin_dir, dir_to_create)
+    analyticDirs = [d.name for d in os.scandir(origin_dir) if d.is_dir()]
 
-    if rewrite and os.path.exists(dest_dir):
-        shutil.rmtree(dest_dir)
-    elif analytic_dirs:
-        new_folder_name = str(int(max(analytic_dirs)) + 1)
-        dest_dir = os.path.join(origin_dir, new_folder_name)
+    if rewrite and os.path.exists(destDir):
+        shutil.rmtree(destDir)
+    elif analyticDirs:
+        newFolderName = str(int(max(analyticDirs)) + 1)
+        destDir = os.path.join(origin_dir, newFolderName)
 
-    os.mkdir(dest_dir)
+    os.mkdir(destDir)
 
-    return dest_dir
+    return destDir
     
