@@ -3,7 +3,7 @@ import smtplib
 import imghdr
 from email.message import EmailMessage
 
-def sendAnalytics():
+def sendAnalytics(emailDir):
     gmailUser="..."
     gmailPassword="..."
     # Create the container email message.
@@ -16,11 +16,10 @@ def sendAnalytics():
     # Open the files in binary mode.  Use imghdr to figure out the
     # MIME subtype for each specific image.
 
-    originDir = './email'
-    images = [f.name for f in os.scandir(originDir) if f.is_file()]
+    images = [f.name for f in os.scandir(emailDir) if f.is_file()]
 
     for file in images:
-        filePath = os.path.join(originDir, file)
+        filePath = os.path.join(emailDir, file)
         with open(filePath, 'rb') as fp:
             imgData = fp.read()
         msg.add_attachment(imgData, maintype='image', subtype=imghdr.what(None, imgData), filename=file)

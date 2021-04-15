@@ -29,7 +29,7 @@ def moveSnapshots():
     
 def analytics():
     originDir = moveSnapshots()
-    emailDir = createFolder('.', 'email', True)
+    emailDir = createFolder('./email', '1', False)
 
     imageOfTeam = face_recognition.load_image_file('./team/team.jpg')
 
@@ -52,6 +52,8 @@ def analytics():
 
     markedAnalysisImage = markPresenceAnalysis(faceAnalytics, len(files))
     markedAnalysisImage.save(os.path.join(emailDir, 'analytics.jpg'))
-    sendAnalytics()
+    sendAnalytics(emailDir)
 
-        
+    # clear memory
+    shutil.rmtree(originDir)
+    shutil.rmtree(emailDir)
