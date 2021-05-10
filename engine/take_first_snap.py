@@ -4,8 +4,9 @@ from utils_faces.save_faces import saveFaces
 
 teamPath = './team/team.jpg'
 firstTeamSnap = ImageGrab.grab()
+rgb_snapshot = firstTeamSnap.convert('RGB')
 # firstTeamSnap.show()
-firstTeamSnap.save(teamPath)
+rgb_snapshot.save(teamPath)
 
 teamImage = cv2.imread(teamPath)
 saveFaces(teamImage)

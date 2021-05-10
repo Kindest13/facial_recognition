@@ -18,7 +18,8 @@ def takeSnapshot():
     name = getDateTime(tm)
 
     snapshot = ImageGrab.grab()
+    rgb_snapshot = snapshot.convert('RGB')
     # snapshot.show()
     myPathToFile = root / "snapshots" / f'{name}.jpg'
 
-    snapshot.save(myPathToFile)
+    rgb_snapshot.save(myPathToFile)
