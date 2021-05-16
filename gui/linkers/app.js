@@ -1,5 +1,10 @@
 const Swal = require('sweetalert2')
 
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
 function detectFaces() {
   const btn = document.getElementById("detect");
   btn.innerText = "Loading...";
@@ -51,14 +56,36 @@ function addFace() {
 }
 
 function startJob() {
-    var {PythonShell} = require("python-shell");
-    var path = require("path");
+    const {PythonShell} = require("python-shell");
+    const path = require("path");
     let timerInterval;
+    let mail;
   
-    var options = {
+    const options = {
       scriptPath: path.join(__dirname, "/../engine/"),
     };
     Swal.fire({
+      title: 'Please provide your email',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showDenyButton: true,
+      confirmButtonText: 'Set and Start',
+      denyButtonText: 'Cancel',
+      preConfirm: (email) => {
+        mail = email;
+        console.log(mail)
+      },
+      inputValidator: (value) => {
+        return !validateEmail(value) && 'Provide valid email. Example: bla@mail.com'
+      }
+    }, 'success').then((result) => {
+      if(result.isDenied) {
+        return false;
+      }
+
+      Swal.fire({
         title: 'The screenshot will be taken in&nbsp;<strong></strong>&nbsp;seconds.',
         text: 'Please open your videochat tab.',
         showDenyButton: true,
@@ -86,6 +113,11 @@ function startJob() {
         }
 
         const teamShot = new PythonShell("take_first_snap.py", options);
+
+        const options2 = {
+          scriptPath: path.join(__dirname, "/../engine/"),
+          args: [mail]
+        };
     
         teamShot.end(function (err, code, message) {
             Swal.fire({
@@ -97,17 +129,16 @@ function startJob() {
                 timer: 3000
             })
 
-            const nextShots = new PythonShell("take_next_snaps.py", options);
-            
+            const nextShots = new PythonShell("take_next_snaps.py", options2);
+
             nextShots.end(function (err, code, message) {
                 console.log(err, code, message);
                 Swal.fire({
                     title: 'The job was stopped!',
                     icon: 'error',
-                    width: '50rem',
                     confirmButtonText: 'Ok'
                 })
             });
         })
     })
-}
+})}

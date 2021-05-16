@@ -10,7 +10,7 @@ def markUnknownFaces(image_to_mark, analytics):
 
     # Find faces in test image
     faceLocations = face_recognition.face_locations(image_to_mark)
-    faceEncodings = face_recognition.face_encodings(image_to_mark, faceLocations);
+    faceEncodings = face_recognition.face_encodings(image_to_mark, faceLocations)
 
     # Convert to PIL format 
     pilImage = Image.fromarray(image_to_mark)

@@ -1,15 +1,16 @@
-import threading
-import multiprocessing
+import sys
 import time
 import schedule
+from multiprocessing import Process
 
 from utils_faces.take_snapshot import takeSnapshot
 from analytics import analytics
 
+data = sys.argv[1]
+
 def run_concurrently(job_func):
-    analytic_process = multiprocessing.Process(target=job_func)
+    analytic_process = Process(target=job_func, args=(data,))
     analytic_process.start()
-    # analytic_process.join()
 
 def main():
     # schedule.every(5).to(30).seconds.do(takeSnapshot)

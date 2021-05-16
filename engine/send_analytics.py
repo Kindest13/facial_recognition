@@ -3,14 +3,14 @@ import smtplib
 import imghdr
 from email.message import EmailMessage
 
-def sendAnalytics(emailDir):
+def sendAnalytics(emailDir, email):
     gmailUser="..."
     gmailPassword="..."
     # Create the container email message.
     msg = EmailMessage()
     msg['Subject'] = 'Analytics'
     msg['From'] = gmailUser
-    msg['To'] = ["..."]
+    msg['To'] = [email]
     msg.preamble = 'You will not see this in a MIME-aware mail reader.\n'
 
     # Open the files in binary mode.  Use imghdr to figure out the

@@ -1,7 +1,5 @@
 import face_recognition
 import shutil, os
-import cv2
-from PIL import Image, ImageDraw
 
 from mark_unknown import markUnknownFaces
 from mark_presence import markPresenceAnalysis
@@ -27,7 +25,7 @@ def moveSnapshots():
 
 
     
-def analytics():
+def analytics(email):
     originDir = moveSnapshots()
     emailDir = createFolder('./email', '1', False)
 
@@ -52,7 +50,7 @@ def analytics():
 
     markedAnalysisImage = markPresenceAnalysis(faceAnalytics, len(files))
     markedAnalysisImage.save(os.path.join(emailDir, 'analytics.jpg'))
-    sendAnalytics(emailDir)
+    sendAnalytics(emailDir, email)
 
     # clear memory
     shutil.rmtree(originDir)
