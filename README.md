@@ -12,6 +12,7 @@ Clone this repository to your local machine.
 * [pip3](https://pip.pypa.io/en/stable/installing/) - installation guide
 * [pipenv](https://pypi.org/project/pipenv/) - installation guide
 * [nodejs](https://nodejs.org/uk/download/) - installation guide
+
 Go to the local copy of repository. Open terminal and run the following command
 ##### install all dependencies defined in package.json and requirements.txt
 `$pip install -r requirements.txt`
