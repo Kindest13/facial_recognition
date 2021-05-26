@@ -21,6 +21,7 @@ Go to the local copy of repository. Open terminal and run the following command
 ### Set admin email
 Set administrator' email and password to be able to send email with analytics to users' email.
 Go to engine/send_analytics.py and set valid email and password
+
 ![image](https://user-images.githubusercontent.com/41145554/119695101-87382280-be56-11eb-8f7d-32c77f901c9b.png)
 
 ##### run client
