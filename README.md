@@ -15,8 +15,8 @@ Clone this repository to your local machine.
 
 Go to the local copy of repository. Open terminal and run the following command
 ##### install all dependencies defined in package.json and requirements.txt
-`$ pip install -r requirements.txt`
-`$ npm i`
+* `$ pip install -r requirements.txt`
+* `$ npm i`
 
 ##### run client
 `$ npm start`
